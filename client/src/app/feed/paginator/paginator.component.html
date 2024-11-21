@@ -1,0 +1,11 @@
+<div class="paginator">
+  <ng-content />
+
+  <div class="paginator__controls">
+    @if (currentPage() > 1) {
+    <button class="paginator__control" (click)="onPrevious()">Previous</button>
+    }
+    @if (currentPage() < lastPage()) { <button class="paginator__control" (click)="onNext()">Next</button>
+      }
+  </div>
+</div>

@@ -1,0 +1,14 @@
+@if (isLoading) {
+<div style="text-align: center; margin-top: 2rem;">
+  <app-loader />
+</div>
+} @else {
+<section class="single-post">
+  <h1>{{post.title}}</h1>
+  <h2>
+    Created by {{post.creator.name}} on {{post.createdAt | date:'shortDate'}}
+  </h2>
+  <div class="single-post__image"></div>
+  <p>{{post.content}}</p>
+</section>
+}

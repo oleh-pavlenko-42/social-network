@@ -1,0 +1,60 @@
+<header class="main-header">
+  <div class="toolbar">
+    <nav class="main-nav">
+      <button class="mobile-toggle" (click)="onToggleMobileNav()">
+        <span class="mobile-toggle__bar"></span>
+        <span class="mobile-toggle__bar"></span>
+        <span class="mobile-toggle__bar"></span>
+      </button>
+      <div class="main-nav__logo">
+        <a class="logo" routerLink="/">MessageNode</a>
+      </div>
+      <div class="spacer"></div>
+      <ul class="main-nav__items">
+        @if (isAuthenticated) {
+        <li class="navigation-item">
+          <a routerLink="/">Feed</a>
+        </li>
+        }
+        @if (!isAuthenticated) {
+        <li class="navigation-item">
+          <a routerLink="/">Login</a>
+        </li>
+        <li class="navigation-item">
+          <a routerLink="/signup">Signup</a>
+        </li>
+        }
+        @if (isAuthenticated) {
+        <li class="navigation-item">
+          <button>Logout</button>
+        </li>
+        }
+      </ul>
+    </nav>
+  </div>
+</header>
+<nav class="mobile-nav" [class.open]="isMobileNavOpen">
+  <ul class="mobile-nav__items mobile">
+    @if (isAuthenticated) {
+    <li class="navigation-item mobile">
+      <a routerLink="/">Feed</a>
+    </li>
+    }
+    @if (!isAuthenticated) {
+    <li class="navigation-item mobile">
+      <a routerLink="/">Login</a>
+    </li>
+    <li class="navigation-item mobile">
+      <a routerLink="/signup">Signup</a>
+    </li>
+    }
+    @if (isAuthenticated) {
+    <li class="navigation-item mobile">
+      <button>Logout</button>
+    </li>
+    }
+  </ul>
+</nav>
+@if (isMobileNavOpen) {
+<div class="backdrop" (click)="onToggleMobileNav()"></div>
+}

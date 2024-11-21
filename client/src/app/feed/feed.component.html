@@ -1,0 +1,29 @@
+<section class="feed__status">
+  <form #form="ngForm" (ngSubmit)="onStatusUpdateSubmit()">
+    <app-input>
+      <input type="text" placeholder="Your status" name="status" ngModel>
+    </app-input>
+    <button appButton mode="flat" type="submit">Update</button>
+  </form>
+</section>
+<section class="feed__control">
+  <button appButton mode="raised" design="accent">New Post</button>
+</section>
+<section class="feed">
+  @if (isPostsLoading) {
+  <div style="text-align: center; margin-top: 2rem;">
+    <app-loader></app-loader>
+  </div>
+  } @else {
+  @if (posts.length) {
+  <app-paginator [currentPage]="postPage" [lastPage]="lastPage" (prevPageEvent)="onPrevPage()"
+    (nextPageEvent)="onNextPage()">
+    @for (post of posts; track post._id) {
+    <app-post-item [post]="post" />
+    }
+  </app-paginator>
+  } @else {
+  <p style="text-align: center;">No posts found.</p>
+  }
+  }
+</section>

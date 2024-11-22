@@ -19,7 +19,7 @@ export class PostsService {
           },
           title: 'First Post',
           content: 'Dummy post content',
-          imageUrl: 'dummy-url',
+          imageUrl: 'images/boat.jpg',
           createdAt: new Date(),
         },
         {
@@ -29,7 +29,7 @@ export class PostsService {
           },
           title: 'Second Post',
           content: 'Dummy post content',
-          imageUrl: 'dummy-url',
+          imageUrl: 'images/car.jpg',
           createdAt: new Date(),
         },
       ],
@@ -45,7 +45,7 @@ export class PostsService {
         },
         title: 'First Post',
         content: 'Dummy post content',
-        imageUrl: 'dummy-url',
+        imageUrl: 'images/boat.jpg',
         createdAt: new Date(),
       },
     }).pipe(delay(2000));

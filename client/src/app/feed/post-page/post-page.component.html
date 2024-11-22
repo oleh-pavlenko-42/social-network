@@ -8,7 +8,9 @@
   <h2>
     Created by {{post.creator.name}} on {{post.createdAt | date:'shortDate'}}
   </h2>
-  <div class="single-post__image"></div>
+  <div class="single-post__image">
+    <app-image [imageUrl]="post.imageUrl" contain />
+  </div>
   <p>{{post.content}}</p>
 </section>
 }

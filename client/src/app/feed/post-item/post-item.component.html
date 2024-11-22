@@ -5,7 +5,9 @@
     </h3>
     <h1 class="post__title">{{post().title}}</h1>
   </header>
-  <div class="post__image"></div>
+  <div class="post__image">
+    <app-image [imageUrl]="post().imageUrl" contain />
+  </div>
   <div class="post__content">{{post().content}}</div>
   <div class="post__actions">
     <button appButton mode="flat" [routerLink]="post()._id">

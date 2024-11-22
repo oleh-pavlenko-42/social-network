@@ -14,7 +14,7 @@
   position: fixed;
   width: 90%;
   // left: 5%;
-  top: 20vh;
+  top: 10vh;
   background: white;
   border-radius: 5px;
   z-index: 200;
@@ -32,6 +32,15 @@
 
   .modal__content {
     padding: 1rem;
+
+    .new-post__preview-image {
+      display: flex;
+      justify-content: center;
+
+      img {
+        height: 10rem;
+      }
+    }
   }
 
   .modal__actions {

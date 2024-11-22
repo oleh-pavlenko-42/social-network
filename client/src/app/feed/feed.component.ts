@@ -4,7 +4,6 @@ import {
   inject,
   OnInit,
   ViewContainerRef,
-  ɵINPUT_SIGNAL_BRAND_WRITE_TYPE,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ButtonComponent } from '../shared/button/button.component';
@@ -69,8 +68,10 @@ export class FeedComponent implements OnInit {
     const closeSub = component.instance.close.subscribe(() => {
       component.destroy();
     });
-    const submitSub = component.instance.submit.subscribe((formValue) => {
-      console.log('formValue', formValue);
+    const submitSub = component.instance.submit.subscribe((formData) => {
+      console.log('title', formData.get('title'));
+      console.log('content', formData.get('content'));
+      console.log('image', formData.get('image'));
       component.destroy();
     });
     this.destroyRef.onDestroy(() => {

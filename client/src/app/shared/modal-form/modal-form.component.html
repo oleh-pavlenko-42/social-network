@@ -8,6 +8,19 @@
         <input type="text" name="title" id="title" ngModel required>
       </div>
       <div class="input">
+        <label for="image">Image</label>
+        <input type="file" name="image" id="image" ngModel accept="image/png, image/jpeg"
+          (change)="handleFileInput($event)">
+      </div>
+      <div class="new-post__preview-image">
+        @if (!imagePreview) {
+        <p>Please choose an image.</p>
+        } @else {
+        <img [src]="imagePreview" alt="">
+        <!-- <app-image [imageUrl]="imagePreview" contain left /> -->
+        }
+      </div>
+      <div class="input">
         <label for="content">Content</label>
         <textarea name="content" id="content" rows="5" ngModel required></textarea>
       </div>

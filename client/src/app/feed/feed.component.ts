@@ -1,4 +1,11 @@
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import {
+  Component,
+  DestroyRef,
+  inject,
+  OnInit,
+  ViewContainerRef,
+  ɵINPUT_SIGNAL_BRAND_WRITE_TYPE,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ButtonComponent } from '../shared/button/button.component';
 import { InputComponent } from '../shared/input/input.component';
@@ -7,6 +14,7 @@ import { PostsService } from '../posts.service';
 import { Post, PostsResponse } from './posts-response.model';
 import { PaginatorComponent } from './paginator/paginator.component';
 import { PostItemComponent } from './post-item/post-item.component';
+import { ModalFormComponent } from '../shared/modal-form/modal-form.component';
 
 @Component({
   selector: 'app-feed',
@@ -25,6 +33,7 @@ import { PostItemComponent } from './post-item/post-item.component';
 export class FeedComponent implements OnInit {
   private postsService = inject(PostsService);
   private destroyRef = inject(DestroyRef);
+  private viewContainer = inject(ViewContainerRef);
 
   isPostsLoading = false;
   postPage = 1;
@@ -53,4 +62,20 @@ export class FeedComponent implements OnInit {
   onPrevPage(): void {}
 
   onNextPage(): void {}
+
+  openNewPostModal(): void {
+    const component = this.viewContainer.createComponent(ModalFormComponent);
+    component.setInput('title', 'New Post');
+    const closeSub = component.instance.close.subscribe(() => {
+      component.destroy();
+    });
+    const submitSub = component.instance.submit.subscribe((formValue) => {
+      console.log('formValue', formValue);
+      component.destroy();
+    });
+    this.destroyRef.onDestroy(() => {
+      closeSub.unsubscribe();
+      submitSub.unsubscribe();
+    });
+  }
 }

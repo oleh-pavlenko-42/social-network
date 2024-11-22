@@ -1,13 +1,12 @@
 <section class="feed__status">
   <form #form="ngForm" (ngSubmit)="onStatusUpdateSubmit()">
-    <app-input>
-      <input type="text" placeholder="Your status" name="status" ngModel>
+    <app-input type="text" placeholder="Your status" control="input" name="status">
     </app-input>
     <button appButton mode="flat" type="submit">Update</button>
   </form>
 </section>
 <section class="feed__control">
-  <button appButton mode="raised" design="accent">New Post</button>
+  <button appButton mode="raised" design="accent" (click)="openNewPostModal()">New Post</button>
 </section>
 <section class="feed">
   @if (isPostsLoading) {

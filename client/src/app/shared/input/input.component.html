@@ -1,1 +1,10 @@
-<ng-content />
+@if (label()) {
+<label [for]="name()">{{label()}}</label>
+}
+
+@if (control() === 'input') {
+<input type="text" [name]="name()" [id]="name()" [placeholder]="placeholder()" ngModel #inputRef="ngModel">
+} @else {
+<textarea [name]="name()" [id]="name()" [rows]="rows()" [placeholder]="placeholder()" ngModel
+  #inputRef="ngModel"></textarea>
+}

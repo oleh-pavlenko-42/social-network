@@ -7,6 +7,20 @@ body {
   font-family: sans-serif;
 }
 
+.auth-form {
+  width: 90%;
+  margin: auto;
+  padding: 1rem;
+  border: 1px solid #3b0062;
+  border-radius: 5px;
+}
+
+@media (min-width: 768px) {
+  .auth-form {
+    width: 40rem;
+  }
+}
+
 .input {
   margin: 1rem 0;
   width: 100%;

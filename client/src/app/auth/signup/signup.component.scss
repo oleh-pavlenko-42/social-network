@@ -1,1 +1,15 @@
+.auth-form {
+  position: relative;
+}
 
+.loader-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba($color: #ffffff, $alpha: 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

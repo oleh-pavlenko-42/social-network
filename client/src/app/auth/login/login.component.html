@@ -1,4 +1,12 @@
 <section class="auth-form">
+  @if (isLoading) {
+  <div class="loader-container">
+    <app-loader />
+  </div>
+  }
+  @if (error) {
+  <app-alert class="alert alert-danger">{{error}}</app-alert>
+  }
   <form #form="ngForm" (ngSubmit)="onLogin()">
     <div class="input">
       <label for="email">Your E-Mail</label>

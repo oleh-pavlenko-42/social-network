@@ -18,15 +18,15 @@
         }
         @if (!isAuthenticated) {
         <li class="navigation-item">
-          <a routerLink="/login">Login</a>
+          <a routerLink="/login" routerLinkActive="active">Login</a>
         </li>
         <li class="navigation-item">
-          <a routerLink="/signup">Signup</a>
+          <a routerLink="/signup" routerLinkActive="active">Signup</a>
         </li>
         }
         @if (isAuthenticated) {
         <li class="navigation-item">
-          <button>Logout</button>
+          <button (click)="onLogout()">Logout</button>
         </li>
         }
       </ul>
@@ -42,10 +42,10 @@
     }
     @if (!isAuthenticated) {
     <li class="navigation-item mobile">
-      <a routerLink="/login">Logins</a>
+      <a routerLink="/login" routerLinkActive="active">Login</a>
     </li>
     <li class="navigation-item mobile">
-      <a routerLink="/signup">Signup</a>
+      <a routerLink="/signup" routerLinkActive="active">Signup</a>
     </li>
     }
     @if (isAuthenticated) {

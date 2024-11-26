@@ -16,6 +16,6 @@ export type PostResponse = {
 };
 
 export type PostsResponse = {
-  totalItems: number;
+  totalItems?: number;
   posts: Post[];
 };

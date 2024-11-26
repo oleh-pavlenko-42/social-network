@@ -10,64 +10,49 @@ export class PostsService {
   private authService = inject(AuthService);
 
   getPosts(): Observable<PostsResponse> {
+    return this.http.get<PostsResponse>('http://localhost:8080/feed/posts', {
+      responseType: 'json',
+    });
     return this.authService.user.pipe(
-      delay(2000),
       take(1),
       exhaustMap((user) => {
-        return of<PostsResponse>({
-          totalItems: 5,
-          posts: [
-            {
-              _id: '1',
-              creator: {
-                name: 'Oleh',
-              },
-              title: 'First Post',
-              content: 'Dummy post content',
-              imageUrl: 'images/boat.jpg',
-              createdAt: new Date(),
-            },
-            {
-              _id: '2',
-              creator: {
-                name: 'Oleh',
-              },
-              title: 'Second Post',
-              content: 'Dummy post content',
-              imageUrl: 'images/car.jpg',
-              createdAt: new Date(),
-            },
-          ],
-        });
-        return this.http.get<PostsResponse>('http://localhost:3000', {
-          params: new HttpParams().set('auth', user?.token || ''),
-        });
-      }),
-      delay(2000)
+        // return of<PostsResponse>({
+        //   totalItems: 5,
+        //   posts: [
+        //     {
+        //       _id: '1',
+        //       creator: {
+        //         name: 'Oleh',
+        //       },
+        //       title: 'First Post',
+        //       content: 'Dummy post content',
+        //       imageUrl: 'images/boat.jpg',
+        //       createdAt: new Date(),
+        //     },
+        //     {
+        //       _id: '2',
+        //       creator: {
+        //         name: 'Oleh',
+        //       },
+        //       title: 'Second Post',
+        //       content: 'Dummy post content',
+        //       imageUrl: 'images/car.jpg',
+        //       createdAt: new Date(),
+        //     },
+        //   ],
+        // });
+        return this.http.get<PostsResponse>('http://localhost:8080/feed/posts');
+      })
     );
   }
 
   getPost(postId: string): Observable<PostResponse> {
-    return this.authService.user.pipe(
-      take(1),
-      exhaustMap((user) => {
-        return of<PostResponse>({
-          post: {
-            _id: '1',
-            creator: {
-              name: 'Oleh',
-            },
-            title: 'First Post',
-            content: 'Dummy post content',
-            imageUrl: 'images/boat.jpg',
-            createdAt: new Date(),
-          },
-        });
-        return this.http.get<PostResponse>('http://localhost:3000', {
-          params: new HttpParams().set('auth', user?.token || ''),
-        });
-      }),
-      delay(2000)
+    return this.http.get<PostResponse>(
+      `http://localhost:8080/feed/post/${postId}`
     );
+  }
+
+  addPost(formData: FormData) {
+    return this.http.post('http://localhost:8080/feed/post', formData);
   }
 }

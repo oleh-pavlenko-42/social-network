@@ -46,7 +46,7 @@ export class FeedComponent implements OnInit {
       .getPosts()
       .subscribe((resData: PostsResponse) => {
         this.posts = resData.posts;
-        this.totalItems = resData.totalItems;
+        this.totalItems = resData.totalItems || 1;
         this.isPostsLoading = false;
         this.lastPage = Math.ceil(this.totalItems / 2);
       });
@@ -69,9 +69,20 @@ export class FeedComponent implements OnInit {
       component.destroy();
     });
     const submitSub = component.instance.submit.subscribe((formData) => {
-      console.log('title', formData.get('title'));
-      console.log('content', formData.get('content'));
-      console.log('image', formData.get('image'));
+      this.postsService.addPost(formData).subscribe((resData) => {
+        const subscription = this.postsService
+          .getPosts()
+          .subscribe((resData: PostsResponse) => {
+            this.posts = resData.posts;
+            this.totalItems = resData.totalItems || 1;
+            this.isPostsLoading = false;
+            this.lastPage = Math.ceil(this.totalItems / 2);
+          });
+
+        this.destroyRef.onDestroy(() => {
+          subscription.unsubscribe();
+        });
+      });
       component.destroy();
     });
     this.destroyRef.onDestroy(() => {

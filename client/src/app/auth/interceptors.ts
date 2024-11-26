@@ -22,7 +22,7 @@ export function authInterceptor(
       const modifiedReq = req.clone({
         params: new HttpParams().set('auth', user?.token || ''),
       });
-      return next(modifiedReq);
+      return next(req);
     })
   );
 }

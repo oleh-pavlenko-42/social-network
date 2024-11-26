@@ -4,6 +4,7 @@ import { Post } from '../posts-response.model';
 import { DatePipe } from '@angular/common';
 import { LoaderComponent } from '../../shared/loader/loader.component';
 import { ImageComponent } from '../../shared/image/image.component';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-post-page',
@@ -24,8 +25,16 @@ export class PostPageComponent implements OnInit {
     this.isLoading = true;
     const subscription = this.postsService
       .getPost(this.postId())
-      .subscribe((resData) => {
-        this.post = resData.post;
+      .pipe(
+        map((resData) => {
+          return {
+            ...resData.post,
+            imageUrl: `http://localhost:8080/${resData.post.imageUrl}`,
+          };
+        })
+      )
+      .subscribe((post) => {
+        this.post = post;
         this.isLoading = false;
       });
 

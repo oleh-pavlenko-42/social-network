@@ -1,13 +1,10 @@
 <article class="post">
   <header class="post__header">
     <h3 class="post__meta">
-      Posted by {{ post().creator.name }} on {{post().createdAt | date:'shortDate'}}
+      Posted by {{ post().creator?.name || '' }} on {{post().createdAt | date:'shortDate'}}
     </h3>
     <h1 class="post__title">{{post().title}}</h1>
   </header>
-  <div class="post__image">
-    <app-image [imageUrl]="post().imageUrl" contain />
-  </div>
   <div class="post__content">{{post().content}}</div>
   <div class="post__actions">
     <button appButton mode="flat" [routerLink]="post()._id">

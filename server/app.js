@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const multer = require('multer');
 const mongoose = require('mongoose');
 const { v4: uuidv4 } = require('uuid');
+const dotenv = require('dotenv');
 
 const feedRoutes = require('./routes/feed');
 
@@ -57,9 +58,11 @@ app.use((error, req, res, next) => {
   res.status(status).json({ message });
 });
 
+dotenv.config();
+
 mongoose
   .connect(
-    'mongodb+srv://olehpavlenko42:dX7SMbeegHqPK1FH@cluster0.gptzd.mongodb.net/social-network?retryWrites=true&w=majority&appName=Cluster0'
+    `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.gptzd.mongodb.net/social-network?retryWrites=true&w=majority&appName=Cluster0`
   )
   .then((result) => app.listen(8080))
   .catch((err) => console.log(err));

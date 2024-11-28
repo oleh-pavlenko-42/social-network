@@ -13,37 +13,36 @@ export class PostsService {
     return this.http.get<PostsResponse>('http://localhost:8080/feed/posts', {
       responseType: 'json',
     });
-    return this.authService.user.pipe(
-      take(1),
-      exhaustMap((user) => {
-        // return of<PostsResponse>({
-        //   totalItems: 5,
-        //   posts: [
-        //     {
-        //       _id: '1',
-        //       creator: {
-        //         name: 'Oleh',
-        //       },
-        //       title: 'First Post',
-        //       content: 'Dummy post content',
-        //       imageUrl: 'images/boat.jpg',
-        //       createdAt: new Date(),
-        //     },
-        //     {
-        //       _id: '2',
-        //       creator: {
-        //         name: 'Oleh',
-        //       },
-        //       title: 'Second Post',
-        //       content: 'Dummy post content',
-        //       imageUrl: 'images/car.jpg',
-        //       createdAt: new Date(),
-        //     },
-        //   ],
-        // });
-        return this.http.get<PostsResponse>('http://localhost:8080/feed/posts');
-      })
-    );
+    // return this.authService.user.pipe(
+    //   take(1),
+    //   exhaustMap((user) => {
+    //     return of<PostsResponse>({
+    //       totalItems: 5,
+    //       posts: [
+    //         {
+    //           _id: '1',
+    //           creator: {
+    //             name: 'Oleh',
+    //           },
+    //           title: 'First Post',
+    //           content: 'Dummy post content',
+    //           imageUrl: 'images/boat.jpg',
+    //           createdAt: new Date(),
+    //         },
+    //         {
+    //           _id: '2',
+    //           creator: {
+    //             name: 'Oleh',
+    //           },
+    //           title: 'Second Post',
+    //           content: 'Dummy post content',
+    //           imageUrl: 'images/car.jpg',
+    //           createdAt: new Date(),
+    //         },
+    //       ],
+    //     });
+    //   })
+    // );
   }
 
   getPost(postId: string): Observable<PostResponse> {
@@ -54,5 +53,9 @@ export class PostsService {
 
   addPost(formData: FormData) {
     return this.http.post('http://localhost:8080/feed/post', formData);
+  }
+
+  editPost(postId: string, formData: FormData) {
+    return this.http.put(`http://localhost:8080/feed/post/${postId}`, formData);
   }
 }

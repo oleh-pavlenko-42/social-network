@@ -1,33 +1,13 @@
 <div class="backdrop" (click)="onClose()"></div>
 <dialog class="modal" open>
-  <form #form="ngForm" (ngSubmit)="onSubmit()">
+  <div>
     <header class="modal__header">{{title()}}</header>
     <div class="modal__content">
-      <div class="input">
-        <label for="title">Title</label>
-        <input type="text" name="title" id="title" ngModel required>
-      </div>
-      <div class="input">
-        <label for="image">Image</label>
-        <input type="file" name="image" id="image" ngModel accept="image/png, image/jpeg"
-          (change)="handleFileInput($event)">
-      </div>
-      <div class="new-post__preview-image">
-        @if (!imagePreview) {
-        <p>Please choose an image.</p>
-        } @else {
-        <img [src]="imagePreview" alt="">
-        <!-- <app-image [imageUrl]="imagePreview" contain left /> -->
-        }
-      </div>
-      <div class="input">
-        <label for="content">Content</label>
-        <textarea name="content" id="content" rows="5" ngModel required></textarea>
-      </div>
+      <ng-content />
     </div>
     <div class="modal__actions">
       <button appButton design="danger" mode="flat" (click)="onClose()" type="button">Cancel</button>
-      <button appButton mode="raised" type="submit">Accept</button>
+      <button appButton mode="raised" type="submit" (click)="onSubmit()">Accept</button>
     </div>
-  </form>
+  </div>
 </dialog>

@@ -47,5 +47,11 @@ export class PostItemComponent {
     });
   }
 
-  onDelete(): void {}
+  onDelete(): void {
+    const deleteSub = this.postsService.deletePost(this.post()._id).subscribe();
+
+    this.destroyRef.onDestroy(() => {
+      deleteSub.unsubscribe();
+    });
+  }
 }

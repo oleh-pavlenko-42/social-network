@@ -51,9 +51,17 @@ export class FeedComponent implements OnInit {
         this.isPostsLoading = false;
         this.lastPage = Math.ceil(this.totalItems / 2);
       });
-
+    const postsSub = this.postsService.posts.subscribe(() => {
+      this.postsService.getPosts().subscribe((resData: PostsResponse) => {
+        this.posts = resData.posts;
+        this.totalItems = resData.totalItems || 1;
+        this.isPostsLoading = false;
+        this.lastPage = Math.ceil(this.totalItems / 2);
+      });
+    });
     this.destroyRef.onDestroy(() => {
       subscription.unsubscribe();
+      postsSub.unsubscribe();
     });
   }
 
@@ -65,7 +73,6 @@ export class FeedComponent implements OnInit {
 
   openNewPostModal(): void {
     const component = this.viewContainer.createComponent(AddPostComponent);
-    component.setInput('title', 'New Post');
     const closeSub = component.instance.close.subscribe(() => {
       component.destroy();
     });

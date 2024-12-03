@@ -1,6 +1,7 @@
 import {
   HttpEvent,
   HttpHandlerFn,
+  HttpHeaders,
   HttpParams,
   HttpRequest,
 } from '@angular/common/http';
@@ -20,9 +21,12 @@ export function authInterceptor(
         return next(req);
       }
       const modifiedReq = req.clone({
-        params: new HttpParams().set('auth', user?.token || ''),
+        headers: new HttpHeaders().set(
+          'Authorization',
+          'Bearer ' + user?.token || ''
+        ),
       });
-      return next(req);
+      return next(modifiedReq);
     })
   );
 }

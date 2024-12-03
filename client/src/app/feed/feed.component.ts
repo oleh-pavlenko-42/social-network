@@ -44,7 +44,7 @@ export class FeedComponent implements OnInit {
   ngOnInit(): void {
     this.isPostsLoading = true;
     const subscription = this.postsService
-      .getPosts()
+      .getPosts(this.postPage)
       .subscribe((resData: PostsResponse) => {
         this.posts = resData.posts;
         this.totalItems = resData.totalItems || 1;
@@ -52,12 +52,14 @@ export class FeedComponent implements OnInit {
         this.lastPage = Math.ceil(this.totalItems / 2);
       });
     const postsSub = this.postsService.posts.subscribe(() => {
-      this.postsService.getPosts().subscribe((resData: PostsResponse) => {
-        this.posts = resData.posts;
-        this.totalItems = resData.totalItems || 1;
-        this.isPostsLoading = false;
-        this.lastPage = Math.ceil(this.totalItems / 2);
-      });
+      this.postsService
+        .getPosts(this.postPage)
+        .subscribe((resData: PostsResponse) => {
+          this.posts = resData.posts;
+          this.totalItems = resData.totalItems || 1;
+          this.isPostsLoading = false;
+          this.lastPage = Math.ceil(this.totalItems / 2);
+        });
     });
     this.destroyRef.onDestroy(() => {
       subscription.unsubscribe();
@@ -67,9 +69,35 @@ export class FeedComponent implements OnInit {
 
   onStatusUpdateSubmit() {}
 
-  onPrevPage(): void {}
+  onPrevPage(): void {
+    this.postPage -= 1;
+    const subscription = this.postsService
+      .getPosts(this.postPage)
+      .subscribe((resData: PostsResponse) => {
+        this.posts = resData.posts;
+        this.totalItems = resData.totalItems || 1;
+        this.isPostsLoading = false;
+        this.lastPage = Math.ceil(this.totalItems / 2);
+      });
+    this.destroyRef.onDestroy(() => {
+      subscription.unsubscribe();
+    });
+  }
 
-  onNextPage(): void {}
+  onNextPage(): void {
+    this.postPage += 1;
+    const subscription = this.postsService
+      .getPosts(this.postPage)
+      .subscribe((resData: PostsResponse) => {
+        this.posts = resData.posts;
+        this.totalItems = resData.totalItems || 1;
+        this.isPostsLoading = false;
+        this.lastPage = Math.ceil(this.totalItems / 2);
+      });
+    this.destroyRef.onDestroy(() => {
+      subscription.unsubscribe();
+    });
+  }
 
   openNewPostModal(): void {
     const component = this.viewContainer.createComponent(AddPostComponent);
@@ -79,7 +107,7 @@ export class FeedComponent implements OnInit {
     const submitSub = component.instance.submit.subscribe((formData) => {
       this.postsService.addPost(formData).subscribe((resData) => {
         const subscription = this.postsService
-          .getPosts()
+          .getPosts(this.postPage)
           .subscribe((resData: PostsResponse) => {
             this.posts = resData.posts;
             this.totalItems = resData.totalItems || 1;

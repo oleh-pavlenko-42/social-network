@@ -10,10 +10,13 @@ export class PostsService {
   private authService = inject(AuthService);
   posts = new Subject();
 
-  getPosts(): Observable<PostsResponse> {
-    return this.http.get<PostsResponse>('http://localhost:8080/feed/posts', {
-      responseType: 'json',
-    });
+  getPosts(page: number): Observable<PostsResponse> {
+    return this.http.get<PostsResponse>(
+      `http://localhost:8080/feed/posts?page=${page}`,
+      {
+        responseType: 'json',
+      }
+    );
     // return this.authService.user.pipe(
     //   take(1),
     //   exhaustMap((user) => {

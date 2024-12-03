@@ -28,14 +28,14 @@ export class AuthService {
     name: string,
     password: string
   ): Observable<AuthResponse> {
-    return of({ token: '123', userId: '12345' }).pipe(
-      delay(1000),
-      tap((resData) => {
-        this.handleAuthentication(resData.userId, resData.token);
-      })
-    );
+    // return of({ token: '123', userId: '12345' }).pipe(
+    //   delay(1000),
+    //   tap((resData) => {
+    //     this.handleAuthentication(resData.userId, resData.token);
+    //   })
+    // );
     return this.http
-      .post<AuthResponse>('', {
+      .put<AuthResponse>('http://localhost:8080/auth/signup', {
         email,
         name,
         password,
@@ -49,15 +49,8 @@ export class AuthService {
   }
 
   login(email: string, password: string): Observable<AuthResponse> {
-    // return throwError(() => 'An unknown error occured.');
-    return of({ token: '123', userId: '12345' }).pipe(
-      delay(1000),
-      tap((resData) => {
-        this.handleAuthentication(resData.userId, resData.token);
-      })
-    );
     return this.http
-      .post<AuthResponse>('', {
+      .post<AuthResponse>('http://localhost:8080/auth/login', {
         email,
         password,
       })
